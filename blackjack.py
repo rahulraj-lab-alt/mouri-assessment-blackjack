@@ -186,7 +186,7 @@ def show_results() -> None:
         print(f" {name} {str(cards)} total {total(name)} {status}")
     valid = {n: total(n) for n in hands if not busted(n) and hands[n]}
     if not valid:
-        print(f"\n for n in hands if not busted(n) and hands[n]")
+        print(f"\n No winner - everyone busted!")
         return
     best = max(valid.values())
     winners = [n for n, t in valid.items() if t == best]
@@ -206,7 +206,7 @@ def build_llms():
 
     try:
         player_llm.invoke("Reply with OK")
-    except:
+    except Exception as e:
         sys.exit(f"Could not reach the LLM at {base_url} (model '{model}'): {e}")
     return dealer_llm.bind_tools([deal_card, end_turn]), player_llm
 
